@@ -1,4 +1,5 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
+
 import { createPlayer } from "./player.js"
 import { createFox } from "./foxAI.js"
 import { createWorld, updateWorld } from "./world.js"
