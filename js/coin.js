@@ -1,43 +1,42 @@
-let coins=[]
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 
-export function spawnCoins(scene,player){
+let coins = []
+let coinCount = 0
 
-if(Math.random()<0.03){
+export function spawnCoins(scene){
 
-const coin = new THREE.Mesh(
+const geometry = new THREE.CylinderGeometry(0.5,0.5,0.1,16)
+const material = new THREE.MeshStandardMaterial({color:0xffd700})
 
-new THREE.CylinderGeometry(0.3,0.3,0.1,16),
+for(let i=0;i<20;i++){
 
-new THREE.MeshStandardMaterial({color:0xFFD700})
-
-)
+const coin = new THREE.Mesh(geometry,material)
 
 coin.rotation.x = Math.PI/2
-
 coin.position.set(
-
-(Math.random()*6)-3,
+(Math.random()-0.5)*20,
 1,
--80
-
+- i*20
 )
 
 scene.add(coin)
-
 coins.push(coin)
 
 }
 
-coins.forEach((c,i)=>{
+}
 
-c.position.z += 0.3
+export function updateCoins(player){
 
-if(Math.abs(player.position.x-c.position.x)<1 &&
-Math.abs(player.position.z-c.position.z)<1){
+coins.forEach((coin,index)=>{
 
-scene.remove(c)
+if(player.position.distanceTo(coin.position) < 1.5){
 
-coins.splice(i,1)
+coin.visible=false
+coins.splice(index,1)
+
+coinCount++
+document.getElementById("coins").innerText="Coins: "+coinCount
 
 }
 
