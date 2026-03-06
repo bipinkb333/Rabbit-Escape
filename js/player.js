@@ -1,3 +1,4 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 export function createPlayer(scene){
 
 const rabbit = new THREE.Mesh(
@@ -70,5 +71,6 @@ this.sliding=false
 }
 
 return rabbit
+
 
 }
