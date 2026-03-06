@@ -1,3 +1,4 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 let powerups=[]
 
 export function spawnPowerups(scene){
@@ -42,5 +43,6 @@ powerups.splice(i,1)
 }
 
 })
+
 
 }
