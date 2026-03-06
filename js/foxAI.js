@@ -9,7 +9,7 @@ new THREE.MeshStandardMaterial({color:0xff6600})
 
 )
 
-fox.position.set(0,0.5,-6)
+fox.position.set(0,0.5,30)
 
 scene.add(fox)
 
@@ -33,3 +33,4 @@ location.reload()
 
 
 }
+
