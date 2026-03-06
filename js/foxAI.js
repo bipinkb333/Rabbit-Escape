@@ -1,3 +1,4 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 export function createFox(scene){
 
 const fox = new THREE.Mesh(
@@ -29,5 +30,6 @@ location.reload()
 }
 
 }
+
 
 }
