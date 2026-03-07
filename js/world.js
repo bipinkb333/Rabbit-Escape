@@ -1,8 +1,10 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 
 let tiles = [];
+
 export function createWorld(scene) {
     for(let i = 0; i < 40; i++) {
+        // Create Ground
         const tile = new THREE.Mesh(
             new THREE.PlaneGeometry(10, 10),
             new THREE.MeshStandardMaterial({color: 0x228B22})
@@ -10,14 +12,11 @@ export function createWorld(scene) {
         tile.rotation.x = -Math.PI / 2;
         tile.position.z = -i * 10;
         scene.add(tile);
-    }
-}
-// Remove the updateWorld() movement logic entirely
-export function updateWorld() {}
+        tiles.push(tile); // Add to tiles array so it can move
 
-        //  Forest Trees
-        if(i % 2 === 0) spawnTree(scene, -6, -i*10);
-        if(i % 3 === 0) spawnTree(scene, 6, -i*10);
+        // Forest Trees
+        if(i % 2 === 0) spawnTree(scene, -6, -i * 10);
+        if(i % 3 === 0) spawnTree(scene, 6, -i * 10);
     }
 }
 
@@ -31,7 +30,7 @@ function spawnTree(scene, x, z) {
     scene.add(tree);
 }
 
-export function updateWorld(speed){
+export function updateWorld(speed) {
     tiles.forEach(t => {
         t.position.z += speed;
         if(t.position.z > 10) t.position.z -= 400;
