@@ -1,7 +1,7 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 import { createPlayer } from "./player.js";
 import { createFox } from "./foxAI.js";
-import { createWorld } from "./world.js";
+import { createWorld, updateWorld } from "./world.js";
 import { spawnCoins, updateCoins } from "./coins.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
 import { setupControls } from "./controls.js";
@@ -40,21 +40,24 @@ document.getElementById("startBtn").onclick = () => {
 function animate(time) {
     requestAnimationFrame(animate);
 
-    if (!gameStarted) {
+if (!gameStarted) {
         renderer.render(scene, camera);
         return;
     }
 
-    // 1. Move Player Forward
+    // 2. Move Player Forward (Only once)
     player.position.z -= gameSpeed;
 
+    // 3. Recycle World Tiles (Pass player's new position)
+    updateWorld(player.position.z);
+   
     // 2. Logic Updates
     player.updateLane();
     if (player.updateAnimation) player.updateAnimation(time * 0.001);
 
     // 3. Spawning and Updating Objects (relative to player)
     spawnCoins(scene, player.position.z);
-    updateCoins(player);
+    updateCoins(player, 0);
 
     spawnObstacles(scene, player.position.z);
     updateObstacles(player, fox);
