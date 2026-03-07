@@ -33,12 +33,7 @@ function spawnTree(scene, x, z) {
     leaves.position.y = 1.5;
     tree.add(trunk, leaves);
     tree.position.set(x + (Math.random() * 2), 0.5, z);
-    scene.add(tree);
+    return tree; // Return the tree to be added to the group
 }
 
-export function updateWorld(speed) {
-    tiles.forEach(t => {
-        t.position.z += speed;
-        if(t.position.z > 10) t.position.z -= 400;
-    });
-}
+export function updateWorld(speed) {}
