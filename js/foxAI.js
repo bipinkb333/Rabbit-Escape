@@ -12,20 +12,18 @@ export function createFox(scene){
     scene.add(fox);
 
     return {
-        attack(player) {
-            if (attacking) return;
-            attacking = true;
-            fox.visible = true;
-            fox.position.set(player.position.x, 0.5, player.position.z + 10);
-
-            const chase = setInterval(() => {
-                fox.position.z -= 0.25; 
-                fox.position.x += (player.position.x - fox.position.x) * 0.1;
-                if(fox.position.z <= player.position.z + 0.5) {
-                    clearInterval(chase);
-                    document.getElementById("gameOver").style.display = "block";
-                }
-            }, 16);
+    if(attacking) return;
+    attacking = true;
+    fox.visible = true;
+    fox.position.set(player.position.x, 0.5, player.position.z - 5);
+    
+    const chase = setInterval(() => {
+        fox.position.z += 0.1;
+        if(fox.position.z >= player.position.z) {
+            clearInterval(chase);
+            setTimeout(() => { showGameOver(); }, 3000); // 3 second delay
         }
+    }, 16);
+}
     };
 }
