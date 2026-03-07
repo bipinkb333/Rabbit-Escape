@@ -1,0 +1,34 @@
+body{
+margin:0;
+overflow:hidden;
+background:#87ceeb;
+font-family:Arial;
+}
+
+#score{
+position:absolute;
+top:20px;
+left:20px;
+font-size:24px;
+color:white;
+background:rgba(0,0,0,0.5);
+padding:10px;
+border-radius:10px;
+}
+#menu, #gameOver{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+background:black;
+color:white;
+padding:40px;
+border-radius:10px;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+cursor:pointer;
+}

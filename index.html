@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Rabbit Escape Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="hud">Coins: <span id="coins">0</span></div>
+
+    <div id="menu">
+        <h1>Rabbit Escape</h1>
+        <p>Use Arrows or Swipe to Move</p>
+        <button id="startBtn">START RUN</button>
+    </div>
+
+    <div id="gameOver" style="display:none;">
+        <h1>CAUGHT BY FOX!</h1>
+        <button onclick="location.reload()">RESTART</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
