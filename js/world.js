@@ -25,6 +25,17 @@ export function createWorld(scene) {
     }
 }
 
+function animate(time) {
+    // ...
+    // Pass the player's Z position so things spawn ahead of the rabbit
+    spawnCoins(scene, player.position.z);
+    updateCoins(player, 0.5); // Provide a speed or handle movement here
+
+    spawnObstacles(scene); // Ensure this function uses player.position.z
+    updateObstacles(player, fox);
+    // ...
+}
+
 function spawnTree(x, z) {
     const tree = new THREE.Group();
     const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 1), new THREE.MeshStandardMaterial({color: 0x4b2d0b}));
