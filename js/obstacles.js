@@ -1,54 +1,22 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 
 const obstacles = [];
-
-
-// SPAWN OBSTACLES
 export function spawnObstacles(scene) {
+    if(Math.random() > 0.02) return;
+    
+    const geometries = [new THREE.BoxGeometry(1,1,1), new THREE.SphereGeometry(0.7), new THREE.ConeGeometry(0.7, 1)];
+    const geo = geometries[Math.floor(Math.random() * geometries.length)];
+    const mat = new THREE.MeshStandardMaterial({color: 0x8b4513});
+    const obs = new THREE.Mesh(geo, mat);
 
-    // reduce spawn frequency
-    if(Math.random() > 0.008) return;
-
-    const geometry = new THREE.BoxGeometry(1,1,1);
-    const material = new THREE.MeshStandardMaterial({color: 0x8b4513});
-
-    const obstacle = new THREE.Mesh(geometry, material);
-
-    obstacle.position.set(
-        (Math.random() - 0.5) * 6,
-        0.5,
-        -80      // spawn further away
-    );
-
-    scene.add(obstacle);
-    obstacles.push(obstacle);
+    // Spawn relative to player's current Z position
+    obs.position.set((Math.random() - 0.5) * 6, 0.5, -80);
+    scene.add(obs);
+    obstacles.push(obs);
 }
-
-
-// UPDATE OBSTACLES
 export function updateObstacles(player, fox) {
-
     obstacles.forEach((obs, i) => {
-
-        // move obstacle toward player
-        obs.position.z += 0.5;
-
-        // collision detection
-        if(obs.position.distanceTo(player.position) < 1.2){
-
-            // trigger fox attack instead of instant game reload
-            fox.attack(player);
-
-        }
-
-        // remove obstacles after passing player
-        if(obs.position.z > 10){
-
-            obs.parent.remove(obs);
-            obstacles.splice(i,1);
-
-        }
-
+        if(player.position.distanceTo(obs.position) < 1.2) fox.attack(player);
     });
-
 }
+
