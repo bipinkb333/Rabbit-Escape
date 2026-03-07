@@ -5,15 +5,12 @@ let score = 0;
 const geo = new THREE.CylinderGeometry(0.4, 0.4, 0.1, 16);
 const mat = new THREE.MeshStandardMaterial({color: 0xffd700, metalness: 0.5, roughness: 0.1});
 
-export function spawnCoins(scene){
-    if(Math.random() > 0.02) return;
-
+export function spawnCoins(scene, playerZ) {
+    if(Math.random() > 0.05) return; // Increased probability
     const lane = [-2, 0, 2][Math.floor(Math.random() * 3)];
-    // Spawn a trail of 5 coins
     for(let i = 0; i < 5; i++) {
         const coin = new THREE.Mesh(geo, mat);
-        coin.rotation.x = Math.PI/2;
-        coin.position.set(lane, 0.8, -80 - (i * 3));
+        coin.position.set(lane, 0.8, playerZ - 80 - (i * 3)); // Spawn relative to player
         scene.add(coin);
         coins.push(coin);
     }
