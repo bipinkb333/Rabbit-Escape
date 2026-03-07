@@ -1,39 +1,26 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
 
-let tiles = []; // Track tiles to recycle them
+let tiles = [];
 
 export function createWorld(scene) {
     for(let i = 0; i < 40; i++) {
-        // Create Ground Tile
         const tile = new THREE.Mesh(
             new THREE.PlaneGeometry(10, 10),
             new THREE.MeshStandardMaterial({color: 0x228B22})
         );
         tile.rotation.x = -Math.PI / 2;
         
-        // Group everything to make movement/recycling easier
         const group = new THREE.Group();
         group.add(tile);
         
-        // Add trees to the group so they stay with the tile
+        // Add trees
         if(i % 2 === 0) group.add(spawnTree(-6, 0));
         if(i % 3 === 0) group.add(spawnTree(6, 0));
         
         group.position.z = -i * 10;
         scene.add(group);
-        tiles.push(group); // Store in array for recycling
+        tiles.push(group); 
     }
-}
-
-function animate(time) {
-    // ...
-    // Pass the player's Z position so things spawn ahead of the rabbit
-    spawnCoins(scene, player.position.z);
-    updateCoins(player, 0.5); // Provide a speed or handle movement here
-
-    spawnObstacles(scene); // Ensure this function uses player.position.z
-    updateObstacles(player, fox);
-    // ...
 }
 
 function spawnTree(x, z) {
@@ -47,12 +34,15 @@ function spawnTree(x, z) {
 }
 
 export function updateWorld(playerZ) {
-    // Recycle tiles: if a tile is far behind the player, move it to the front
-    tiles.forEach(tileGroup => {
-        if (tileGroup.position.z > playerZ + 20) {
-            // Find the furthest tile in the array to place this one ahead
-            let furthestZ = Math.min(...tiles.map(t => t.position.z));
-            tileGroup.position.z = furthestZ - 10;
+    // Get the Z position of the furthest tile ahead of the player
+    let furthestZ = Math.min(...tiles.map(t => t.position.z));
+
+    tiles.forEach(t => {
+        // If the tile is behind the player (e.g., 20 units behind)
+        if (t.position.z > playerZ + 20) {
+            // Move it to the front of the road
+            t.position.z = furthestZ - 10;
+            furthestZ = t.position.z; // Update reference for next tile
         }
     });
 }
