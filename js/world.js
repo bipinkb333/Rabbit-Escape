@@ -4,15 +4,21 @@ let tiles = [];
 
 export function createWorld(scene) {
     for(let i = 0; i < 40; i++) {
-        // Create Ground
-        const tile = new THREE.Mesh(
-            new THREE.PlaneGeometry(10, 10),
-            new THREE.MeshStandardMaterial({color: 0x228B22})
-        );
-        tile.rotation.x = -Math.PI / 2;
-        tile.position.z = -i * 10;
+        const tile = new THREE.Mesh(/* ... */);
         scene.add(tile);
-        tiles.push(tile); // Add to tiles array so it can move
+        
+        // Create a group for the tile + trees
+        const group = new THREE.Group();
+        group.add(tile);
+        
+        if(i % 2 === 0) {
+            const tree = spawnTree(scene, -6, 0); // Z is 0 relative to group
+            group.add(tree);
+        }
+        
+        group.position.z = -i * 10;
+        scene.add(group);
+        tiles.push(group); 
 
         // Forest Trees
         if(i % 2 === 0) spawnTree(scene, -6, -i * 10);
