@@ -13,6 +13,57 @@ export const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// --- NEW START LOGIC ---
+let gameStarted = false; 
+let gameSpeed = 1.0;
+
+const startBtn = document.getElementById("startBtn");
+const menu = document.getElementById("menu");
+
+startBtn.addEventListener("click", () => {
+    gameStarted = true;
+    menu.style.display = "none";
+});
+// -----------------------
+
+scene.background = new THREE.Color(0x87ceeb);
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 10, 7);
+scene.add(light);
+
+const player = createPlayer(scene);
+const fox = createFox(scene);
+createWorld(scene);
+setupControls(player);
+
+function animate(time) {
+    requestAnimationFrame(animate);
+
+    if (!gameStarted) {
+        renderer.render(scene, camera);
+        return;
+    }
+
+    updateWorld();
+    player.updateLane();
+    
+    //  Add the animation call here
+    if(player.updateAnimation) player.updateAnimation(time * 0.001);
+
+    spawnCoins(scene);
+    updateCoins(player);
+
+    spawnObstacles(scene);
+    updateObstacles(player, fox);
+
+    camera.position.set(player.position.x, 3, player.position.z + 6);
+    camera.lookAt(player.position);
+
+    renderer.render(scene, camera);
+    
+    // Speed Increase
+    gameSpeed += 0.00005;
+
 // Forest Fog & Background
 scene.background = new THREE.Color(0x87ceeb);
 scene.fog = new THREE.Fog(0x87ceeb, 20, 100); 
