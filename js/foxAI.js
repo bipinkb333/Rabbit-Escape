@@ -17,12 +17,12 @@ export function createFox(scene) {
             if (attacking) return;
             attacking = true;
             fox.visible = true;
-            fox.position.set(player.position.x, 0.5, player.position.z - 5);
+            fox.position.set(player.position.x, 0.5, player.position.z - 8);
 
             const chase = setInterval(() => {
-                fox.position.z += 0.1;
+                fox.position.z += 0.3;
                 // If fox catches the rabbit
-                if (fox.position.z >= player.position.z) {
+                if (fox.position.z >= player.position.z -0.5) {
                     clearInterval(chase);
                     // 3-second delay before game over screen
                     setTimeout(() => { 
